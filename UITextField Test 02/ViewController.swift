@@ -8,14 +8,20 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+//delegate 1 => UI의 delegate 객체 상속.
+class ViewController: UIViewController, UITextFieldDelegate{
     @IBOutlet weak var myTextField: UITextField!
     @IBOutlet weak var myLabel: UILabel!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        //delegate 3 => delegate 객체와 ciewcontroller 객체 연결
+        myTextField.delegate = self
         
+        //textField에 x표시 뜨게 나옴
+        myTextField.clearButtonMode = UITextField.ViewMode.always
+        
+        //초기에 textField에 글자 나옴
+        myTextField.placeholder = "숫자를 입력하세요"
     }
 
     @IBAction func buttonPressed(_ sender: Any) {
@@ -33,6 +39,21 @@ class ViewController: UIViewController {
         view.backgroundColor = UIColor.green
         
         
+    }
+    
+    //delegate 2 => Delegate 메소드 overriding
+    public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.backgroundColor = UIColor.green
+        //키패드 내리기
+        myTextField.backgroundColor = UIColor.yellow
+        return true
+    }
+    
+    //
+    public func textFieldShouldClear(_ textField: UITextField) -> Bool {
+        myTextField.backgroundColor = UIColor.lightGray
+
+        return true
     }
 }
 
